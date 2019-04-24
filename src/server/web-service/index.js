@@ -3,7 +3,7 @@ const express = require('express');
 const { multiColor } = require('../../../bundling/utils');
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8080;
 const rootDir = path.resolve(__dirname, '..', '..', '..');
 
 // hide powered by express
