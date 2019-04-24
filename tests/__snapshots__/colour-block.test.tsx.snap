@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ColourBlock /> Should render a regular span 1`] = `
+<div>
+  <span>
+    Normal span...
+  </span>
+</div>
+`;
+
+exports[`<ColourBlock /> Should render a set of spans 1`] = `
+.emotion-0 {
+  color: #C22;
+}
+
+<div>
+  <span>
+    Normal span...
+  </span>
+  <span
+    className="emotion-0"
+  >
+     Coloured span!
+  </span>
+</div>
+`;
+
+exports[`<ColourBlock /> Should render a stylised span 1`] = `
+.emotion-0 {
+  color: #C22;
+}
+
+<div>
+  <span
+    className="emotion-0"
+  >
+    Coloured span!
+  </span>
+</div>
+`;

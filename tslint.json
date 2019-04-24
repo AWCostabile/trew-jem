@@ -1,0 +1,29 @@
+{
+  "defaultSeverity": "error",
+  "extends": [
+    "tslint:recommended",
+    "tslint-config-airbnb",
+    "tslint-config-prettier"
+  ],
+  "rules": {
+    "import-name": [
+      true,
+      {
+        "reactEmotion": "styled"
+      }
+    ],
+    "member-access": false,
+    "no-console": [true, "debug", "log"],
+    "no-default-export": true,
+    "object-literal-sort-keys": false,
+    "object-shorthand-properties-first": false,
+    "triple-equals": [true, "allow-null-check"],
+    "variable-name": [
+      true,
+      "allow-leading-underscore",
+      "allow-pascal-case",
+      "ban-keywords",
+      "check-format"
+    ]
+  }
+}
