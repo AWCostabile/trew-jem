@@ -16,7 +16,7 @@
     "build": " npm-run-all build:server build:client",
     "build:client": "cross-env SERVER=false webpack --config bundling",
     "build:server": "cross-env SERVER=true webpack --config bundling",
-    "dev": "cross-env DEVELOPMENT=true npm-run-all clean start",
+    "dev": "cross-env DEVELOPMENT=true PORT=8080 npm-run-all clean start",
     "pretest": "tsc",
     "release": "npm-run-all clean test build",
     "prod": "npm-run-all release start",
