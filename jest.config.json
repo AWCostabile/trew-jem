@@ -1,0 +1,11 @@
+{
+  "roots": ["<rootDir>/tests"],
+  "modulePaths": ["node_modules", "src", "tests"],
+  "moduleDirectories": ["node_modules", "src", "tests"],
+  "setupFiles": ["<rootDir>/tests/jest-setup.ts"],
+  "snapshotSerializers": ["jest-emotion/serializer"],
+  "testRegex": "^.+\\.test\\.tsx?$",
+  "transform": {
+    "^.+\\.tsx?$": "ts-jest"
+  }
+}
