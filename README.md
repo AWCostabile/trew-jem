@@ -17,7 +17,7 @@ This starter might not be for all projects, but hopefully it will come in handy 
 
 ## Install and Run
 
-Install and run it in development mode for a ready to go demo on port `3000`
+Install and run it in development mode for a ready to go demo on port `8080`
 
 ```
 npm i
