@@ -5,7 +5,7 @@ const client = require('./bundle-client');
 const server = require('./bundle-server');
 const getEnv = require('./env');
 const toRules = require('./rules');
-const { multiColor } = require('./utils');
+const { onBuild } = require('./console');
 
 module.exports = ({
   isDevelopment = false,
@@ -15,6 +15,7 @@ module.exports = ({
 }) => {
   const env = getEnv(rootDir, isDevelopment);
   const config = isServer ? server : client;
+  const apiPath = !env.API_SERVER.match(/false/);
   const _isDevelopment = isDevelopment || !!env.LOCAL_BUILD.match(/true/);
   const isLocal = !!env.LOCAL_BUILD.match(/true/);
 
@@ -26,17 +27,7 @@ module.exports = ({
     srcPath
   });
 
-  console.log(
-    multiColor([
-      ['\nCreating ', 'cyan'],
-      isLocal ? ['local ', 'green'] : ['remote ', 'red'],
-      [_isDevelopment ? 'preview' : 'release', 'yellow'],
-      [' build of ', 'cyan'],
-      [env.ENVIRONMENT, 'green'],
-      [isServer ? ' server' : ' client', 'yellow'],
-      [' bundle\n', 'cyan']
-    ])
-  );
+  onBuild(env.ENVIRONMENT, _isDevelopment, isLocal, isServer);
 
   const performance = isLocal ? { hints: 'warning' } : { hints: false };
 
@@ -47,6 +38,7 @@ module.exports = ({
       rootDir,
       plugins: [
         new webpack.DefinePlugin({
+          API_SERVER: apiPath && `"${env.API_SERVER}"`,
           APP_LOGO: `'static/logo-${env.ENVIRONMENT}.png'`,
           BASE_URL: `"${env.BASE_URL}"`,
           DEVELOPMENT: _isDevelopment,

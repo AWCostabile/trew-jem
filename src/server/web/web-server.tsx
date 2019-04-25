@@ -13,7 +13,6 @@ useStaticRendering(true);
 
 export const ServeRequest = ({
   initialState = {},
-  route,
   url
 }: IServerRequest): IServerResponse => {
   const context = {};
@@ -24,7 +23,7 @@ export const ServeRequest = ({
 
   const AppResult = (
     <Provider {...stores}>
-      <StaticRouter context={context} location={url || route}>
+      <StaticRouter context={context} location={url}>
         <AppLayout
           setStatus={(code: number) => {
             next.status = code;

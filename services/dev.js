@@ -2,8 +2,8 @@ const path = require('path');
 const webpack = require('webpack');
 const fs = new (require('memory-fs'))();
 const requireFromString = require('require-from-string');
-const configCreator = require('../../../bundling/creator');
-const { multiColor } = require('../../../bundling/utils');
+const configCreator = require('../bundling/creator');
+const { onResponse } = require('../bundling/console');
 
 module.exports = (app, { rootDir }) => {
   function applyWatch(app, isServer) {
@@ -48,29 +48,25 @@ module.exports = (app, { rootDir }) => {
   applyWatch(app, false);
   applyWatch(app, true);
 
-  app.get('/*', (req, res, next) => {
-    res.setHeader('Cache-Control', 'assets, max-age=604800');
-
+  app.get('/*', async (req, res) => {
     const file = requireFromString(
       fs.readFileSync(path.join(rootDir, 'dist', 'server.bundle.js'), 'utf8'),
       'server.bundle.js'
     );
 
-    const { data, status, isJson = false } = file.parseRequest({
+    const response = await file.parseRequest({
       initialState: {},
-      route: req.path,
-      next
+      ...req
     });
 
-    console.log(
-      multiColor([
-        ['[server: ', 'cyan'],
-        [status, status < 400 ? (status < 300 ? 'green' : 'yellow') : 'red'],
-        [']', 'cyan'],
-        [': ', 'white'],
-        [req.path, 'blue']
-      ])
-    );
+    const { data, headers = {}, isJson = false, status } = response;
+
+    res.set({
+      'Cache-Control': 'assets, max-age=604800',
+      ...headers
+    });
+
+    onResponse(status, req.path);
 
     res.status(status)[isJson ? 'json' : 'send'](data);
   });
