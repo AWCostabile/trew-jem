@@ -6,6 +6,7 @@
     "tslint-config-prettier"
   ],
   "rules": {
+    "array-type": [true, "generic"],
     "import-name": [
       true,
       {
@@ -17,6 +18,7 @@
     "no-default-export": true,
     "object-literal-sort-keys": false,
     "object-shorthand-properties-first": false,
+    "prefer-array-literal": [true, { "allow-type-parameters": true }],
     "triple-equals": [true, "allow-null-check"],
     "variable-name": [
       true,
