@@ -8,7 +8,7 @@ export const Toast: React.SFC<ILoadedToast> = ({
   text
 }) => (
   <ToastItem isQueuedForRemoval={isQueuedForRemoval}>
-    <div>{icon}</div>
-    <div>{text}</div>
+    {icon}
+    {text}
   </ToastItem>
 );

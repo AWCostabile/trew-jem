@@ -1,3 +1,4 @@
+declare const API_SERVER: string | false;
 declare const APP_LOGO: string;
 declare const BASE_URL: string;
 declare const DEVELOPMENT: boolean;

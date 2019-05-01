@@ -2,7 +2,9 @@ import styled from 'react-emotion';
 import { Palette } from 'shared/styling/variables';
 
 export const MainLayoutContainer = styled('div')`
-  background: linear-gradient(${Palette.Grey.DD}, ${Palette.Grey.CC});
+  background-color: ${Palette.Grey.DD};
+  background-position: center;
+  background-repeat: no-repeat;
   display: flex;
   flex-direction: column;
   height: 100%;

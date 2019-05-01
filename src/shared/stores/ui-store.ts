@@ -6,7 +6,7 @@ import { v4 } from 'uuid';
 export interface ILoadedToast {
   closeHandler?: () => void;
   id: string;
-  icon: ReactNode;
+  icon?: ReactNode;
   isQueuedForRemoval: boolean;
   shouldAutoClose: boolean;
   text: React.ReactNode;
