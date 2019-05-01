@@ -1,4 +1,6 @@
+import { IApiRoutes, IApiService, RequestType } from 'server/types/api';
 import { IServerRequest } from 'server/types/general';
+import { apiError } from './api-error';
 
 export class ApiServer {
   routes: IApiRoutes = {
@@ -11,19 +13,24 @@ export class ApiServer {
   }
 
   matchService = (method: string, path: string) =>
-    (this.routes[method] || []).find(service => !!service.path.match(path));
+    (this.routes[method] || []).find(
+      service => !!service.path.match(new RegExp(`${path}?`))
+    );
 
   onRequest = async (request: IServerRequest) => {
-    const { method, url } = request;
-    const service = this.matchService(method.toLowerCase(), url);
+    const { body: data, headers, method, query, params, url } = request;
+    const path = url.split('?')[0].toLowerCase();
+    const service = this.matchService(method.toLowerCase(), path);
 
-    if (service) {
-      const response = await service.handler(request);
-
-      return response;
+    if (!!service) {
+      return await service.handler({ data, headers, params, query });
     }
 
-    return {};
+    throw apiError({
+      code: 'UNMATCHED_ROUTE',
+      reason: `no api endpoint found for ${method.toUpperCase()} request '${path}'`,
+      status: 404
+    });
   };
 
   register = ({ method, path, handler }: IApiService) => {
