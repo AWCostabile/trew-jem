@@ -7,6 +7,6 @@ export const BaseInput = styled('input')`
 
   border-radius: ${SpaceUnit * 0.5}px;
   background: #FFF;
-  border: ${Palette.Grey[77]};
+  border: 1px solid ${Palette.Grey[77]};
   color: ${Palette.Grey[44]};
 `;
