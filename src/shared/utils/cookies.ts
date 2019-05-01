@@ -1,10 +1,5 @@
-import * as JsCookie from 'js-cookie';
+import universalCookie from 'universal-cookie';
 
-export const Cookies = {
-  get: JsCookie.get,
-  getJSON: JsCookie.getJSON,
-  remove: JsCookie.remove,
-  set: (key: string, value: any, options?: JsCookie.CookieAttributes) => {
-    JsCookie.set(key, value, { ...options, secure: !LOCAL_BUILD });
-  }
-};
+const cookieInstance = new universalCookie();
+
+export { cookieInstance as Cookies };
