@@ -1,9 +1,4 @@
-import {
-  IApiRoutes,
-  IApiService,
-  IServerRequest,
-  RequestType
-} from 'server/types';
+import { IServerRequest } from 'server/types/general';
 
 export class ApiServer {
   routes: IApiRoutes = {

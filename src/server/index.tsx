@@ -1,5 +1,5 @@
 import { onRequest } from 'server/api';
-import { IServerRequest } from 'server/types';
+import { IServerRequest } from 'server/types/general';
 import * as WebServer from 'server/web';
 
 export const parseRequest = async (incoming: IServerRequest) => {

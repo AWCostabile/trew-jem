@@ -1,5 +1,5 @@
-import { IApiResponse, IServerRequest } from 'server/types';
 import { LoginController } from './controllers/login';
+import { IServerRequest } from 'server/types/general';
 import { ApiServer } from './service';
 
 const apiServer = new ApiServer([...LoginController]);

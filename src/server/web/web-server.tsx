@@ -4,7 +4,7 @@ import * as React from 'react';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
 import { ToHtml } from 'server/html';
-import { IServerRequest, IServerResponse } from 'server/types';
+import { IServerRequest, IServerResponse } from 'server/types/general';
 import { AppLayout } from 'shared/layouts/app';
 import { createStores } from 'shared/stores';
 import 'shared/styling/global-styles';
