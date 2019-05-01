@@ -1,7 +1,7 @@
 const { onResponse } = require('../bundling/console');
 
 module.exports = app =>
-  app.get('/*', async (req, res) => {
+  app.all('/*', async (req, res) => {
     const response = await require('../dist/server.bundle').parseRequest({
       initialState: {},
       ...req

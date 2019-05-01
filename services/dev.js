@@ -48,7 +48,7 @@ module.exports = (app, { rootDir }) => {
   applyWatch(app, false);
   applyWatch(app, true);
 
-  app.get('/*', async (req, res) => {
+  app.all('/*', async (req, res) => {
     const file = requireFromString(
       fs.readFileSync(path.join(rootDir, 'dist', 'server.bundle.js'), 'utf8'),
       'server.bundle.js'
