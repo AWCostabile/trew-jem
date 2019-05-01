@@ -19,6 +19,11 @@ export class RouteManager extends React.Component<IRouteManagerProps> {
       isLoggedIn && location && location.pathname.match(/^\/login/) && 302;
 
     if (setStatus) {
+      console.log(
+        'SETTING STATUS: ',
+        { location: location ? location.pathname : 'NO LOCATION', isLoggedIn },
+        isLoggedIn ? redirect || 404 : 401
+      );
       setStatus(isLoggedIn ? redirect || 404 : 401);
     }
 
@@ -44,7 +49,7 @@ export class RouteManager extends React.Component<IRouteManagerProps> {
           {routes.map(routeprops => (
             <Route key={routeprops.path} {...routeprops} />
           ))}
-          <Route path="/" render={this.fallbackRoute} />
+          <Route render={this.fallbackRoute} />
         </Switch>
       </Layout>
     );

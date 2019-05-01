@@ -1,3 +1,4 @@
+const { onNoFile } = require('./console');
 const dotEnv = require('dotenv');
 const path = require('path');
 
@@ -7,9 +8,13 @@ module.exports = (rootDir, isDevelopment) => {
       path: path.join(rootDir, '.env')
     });
 
-    if (!env.error) {
-      return env.parsed;
+    if (env.error) {
+      throw env.error.code == 'ENOENT'
+        ? new Error(`\n\n${onNoFile(env.error.path)}\n`)
+        : env.error;
     }
+
+    return env.parsed;
   }
 
   const localEnv = dotEnv.config({

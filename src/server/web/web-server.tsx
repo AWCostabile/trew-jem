@@ -4,7 +4,7 @@ import * as React from 'react';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
 import { ToHtml } from 'server/html';
-import { IServerRequest, IServerResponse } from 'server/types';
+import { IServerRequest, IServerResponse } from 'server/types/general';
 import { AppLayout } from 'shared/layouts/app';
 import { createStores } from 'shared/stores';
 import 'shared/styling/global-styles';
@@ -13,7 +13,6 @@ useStaticRendering(true);
 
 export const ServeRequest = ({
   initialState = {},
-  route,
   url
 }: IServerRequest): IServerResponse => {
   const context = {};
@@ -24,7 +23,7 @@ export const ServeRequest = ({
 
   const AppResult = (
     <Provider {...stores}>
-      <StaticRouter context={context} location={url || route}>
+      <StaticRouter context={context} location={url}>
         <AppLayout
           setStatus={(code: number) => {
             next.status = code;

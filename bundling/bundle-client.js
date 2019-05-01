@@ -22,7 +22,7 @@ module.exports = ({ isDevelopment, plugins = [], rootDir, srcPath }) => ({
     splitChunks: {
       cacheGroups: {
         vendor: {
-          chunks: 'initial',
+          chunks: 'all',
           enforce: true,
           name: 'vendor',
           test: /[\\/]node_modules[\\/]/
