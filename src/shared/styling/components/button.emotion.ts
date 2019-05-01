@@ -18,4 +18,10 @@ export const Button = styled('button')`
   border: ${Palette.Grey.CC};
   color: ${Palette.Grey.F2};
   cursor: pointer;
+
+  :disabled {
+    background: ${Palette.Grey[88]};
+    box-shadow: 0 3px 6px ${Palette.Grey[88]};
+    cursor: not-allowed;
+  }
 `;
