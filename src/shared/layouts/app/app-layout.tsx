@@ -1,6 +1,7 @@
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { Toasts } from 'shared/components/ui/toasts';
+import { LoginLayout } from 'shared/layouts/login';
 import { MainLayout } from 'shared/layouts/main';
 import { RouteManager } from 'shared/routing';
 import { IToast } from 'shared/stores/ui-store';
@@ -24,7 +25,7 @@ const AppLayout: React.SFC<IAppLayoutProps> = props => {
       <RouteManager
         isLoggedIn={isLoggedIn}
         privateLayout={MainLayout}
-        publicLayout={MainLayout}
+        publicLayout={LoginLayout}
         setStatus={setStatus}
       />
       <Toasts />
