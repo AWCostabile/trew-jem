@@ -17,3 +17,13 @@ export interface IRouterLayout {
   navItems: INav[];
 }
 
+export interface ITabContainer {
+  onChange: (event: React.ChangeEvent<{}>, value: any) => void;
+  value: any;
+}
+
+export interface ITabItem {
+  disabled?: boolean;
+  icon?: React.ReactNode;
+  label?: React.ReactNode;
+}
