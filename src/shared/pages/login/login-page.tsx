@@ -19,7 +19,7 @@ interface ILoginPageState {
   password: string;
 }
 
-class LoginPage extends React.Component<RouteComponentProps> {
+class LoginPage extends React.Component {
   state: ILoginPageState = {
     password: '',
     username: ''

@@ -1,29 +1,50 @@
 import * as React from 'react';
-import { Redirect, Route, RouteProps, Switch } from 'react-router-dom';
+import {
+  matchPath,
+  Redirect,
+  Route,
+  RouteComponentProps,
+  Switch
+} from 'react-router-dom';
 import { Error404Page } from 'shared/pages/error';
+import { IRoute, IRouterLayout } from 'shared/types/routing';
 import { IndexRoute, PrivateRoutes } from './private-routes';
 import { loginPath, PublicRoutes } from './public-routes';
 
-interface IRouteManagerProps extends RouteProps {
+interface IRouteManagerProps {
   isLoggedIn: boolean;
-  privateLayout?: React.ComponentType;
-  publicLayout?: React.ComponentType;
+  privateLayout?: React.ComponentType<IRouterLayout>;
+  publicLayout?: React.ComponentType<IRouterLayout>;
   setStatus?: (code: number) => void;
 }
 
 export class RouteManager extends React.Component<IRouteManagerProps> {
-  fallbackRoute = ({ location }: RouteProps) => {
-    const { isLoggedIn, setStatus } = this.props;
+  get connectedProps() {
+    return this.props as IRouteManagerProps & RouteComponentProps;
+  }
+
+  get currentRoute() {
+    const route =
+      (global.window &&
+        global.window.location &&
+        global.window.location.pathname) ||
+      '/';
+    return route;
+  }
+
+  get layout() {
+    const { isLoggedIn, privateLayout, publicLayout } = this.connectedProps;
+
+    return (isLoggedIn ? privateLayout : publicLayout) || React.Fragment;
+  }
+
+  fallbackRoute = ({ location }: RouteComponentProps) => {
+    const { isLoggedIn, setStatus } = this.connectedProps;
 
     const redirect =
       isLoggedIn && location && location.pathname.match(/^\/login/) && 302;
 
     if (setStatus) {
-      console.log(
-        'SETTING STATUS: ',
-        { location: location ? location.pathname : 'NO LOCATION', isLoggedIn },
-        isLoggedIn ? redirect || 404 : 401
-      );
       setStatus(isLoggedIn ? redirect || 404 : 401);
     }
 
@@ -34,20 +55,35 @@ export class RouteManager extends React.Component<IRouteManagerProps> {
     );
   };
 
+  navigationItems = (routes: IRoute[]) =>
+    routes.map(({ disabled, icon, name, path }) => ({
+      disabled,
+      isCurrent: !!matchPath(this.currentRoute, path),
+      icon,
+      name,
+      path
+    }));
+
   redirectPath = (pathname?: string) =>
     pathname !== '/' ? `${loginPath}?redirect=${pathname}` : loginPath;
 
   render() {
-    const { isLoggedIn, privateLayout, publicLayout } = this.props;
-    const routes = (isLoggedIn ? PrivateRoutes() : PublicRoutes()) || [];
-    const Layout =
-      (isLoggedIn ? privateLayout : publicLayout) || React.Fragment;
+    const Layout = this.layout as React.ComponentType<IRouterLayout>;
+    const routes: IRoute[] = [
+      ...(this.connectedProps.isLoggedIn ? PrivateRoutes() : PublicRoutes())
+    ];
 
     return (
-      <Layout>
+      <Layout navItems={this.navigationItems(routes)}>
         <Switch>
-          {routes.map(routeprops => (
-            <Route key={routeprops.path} {...routeprops} />
+          {routes.map(({ component: Component, ...routeprops }) => (
+            <Route
+              {...routeprops}
+              key={routeprops.path}
+              render={(matchProps: any) => {
+                return <Component />;
+              }}
+            />
           ))}
           <Route render={this.fallbackRoute} />
         </Switch>
